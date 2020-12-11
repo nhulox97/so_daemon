@@ -11,7 +11,6 @@ main_menu(){
 }
 
 functions_menu(){
-    echo '######################################################################'
     echo 'Menu de funciones del demonio'
     echo '(1) Capacidad de almacenamiento'
     echo '(2) Ver informacion acerca de la distro'
@@ -66,7 +65,7 @@ functions_script(){
                 clear
         esac    
         if [ $functions_option -ne 11 ]; then
-            echo 'Salir menu de funciones'
+            echo 'Menu de funciones'
             read -p '> Desea realizar otra operacion? (1)si (2)no: ' functions_repeat
             if [ $functions_repeat -eq 2 ]; then
                 functions_option=11
@@ -75,6 +74,69 @@ functions_script(){
     done
 }
 
+wikidaemon_menu(){
+    echo 'Menu de WikiDaemon'
+    echo '(1) Chilate'
+    echo '(2) Python'
+    echo '(3) ReactJs'
+    echo '(4) Horchata'
+    echo '(5) Pupusa'
+    echo '(6) Ayote' 
+    echo '(7) Heroku'
+    echo '(8) Empanada'
+    echo '(9) GNU/Linux'
+    echo '(10) Github'
+    echo '(11) Salir'
+}
+
+wikidaemon_script(){
+    wikidaemon_option=0
+    while [ $wikidaemon_option -ne 11 ]; do
+        wikidaemon_menu
+        read -p "> Ingrese su opcion: " wikidaemon_option
+        case $wikidaemon_option in
+            1)
+                clear
+                echo $wikidaemon_option;;
+            2)
+                clear
+                echo $wikidaemon_option;;
+            3)
+                clear
+                echo $wikidaemon_option;;
+            4)
+                clear
+                echo $wikidaemon_option;;
+            5)
+                clear
+                echo $wikidaemon_option;;
+            6)
+                clear
+                echo $wikidaemon_option;;
+            7)
+                clear
+                echo $wikidaemon_option;;
+            8)
+                clear
+                echo $wikidaemon_option;;
+            9)
+                clear
+                echo $wikidaemon_option;;
+            10)
+                clear
+                echo $wikidaemon_option;;
+            11)
+                clear
+        esac    
+        if [ $wikidaemon_option -ne 11 ]; then
+            echo 'Menu de WikiDaemon'
+            read -p '> Desea realizar otra operacion? (1)si (2)no: ' wikidaemon_repeat
+            if [ $wikidaemon_repeat -eq 2 ]; then
+                wikidaemon_option=11
+            fi
+        fi
+    done
+}
 # Variable pivote para el menu principal
 main_option=0
 while [ $main_option -ne 6 ]; do
@@ -87,11 +149,14 @@ while [ $main_option -ne 6 ]; do
         1)
             # daemon functions 
             clear
+            echo '######################################################################'
             functions_script
             clear;;
         2)
             # Agente inteligente
             clear
+            echo '######################################################################'
+            wikidaemon_script
             echo $main_option;;
         3)
             clear
@@ -106,7 +171,7 @@ while [ $main_option -ne 6 ]; do
             clear;;
     esac 
     if [ $main_option -ne 6 ]; then
-        echo 'Salir menu de principal'
+        echo 'Menu de principal'
         read -p '> Desea realizar otra operacion? (1)si (2)no: ' main_repeat
         if [ $main_repeat -eq 2 ]; then
             main_option=6
