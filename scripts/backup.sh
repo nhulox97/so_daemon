@@ -6,8 +6,7 @@ password='dosv2018'
 user='nhulox97'
 current=`pwd`
 backups_dir="$current/backups"
-logfile="$backups_dir/logfile.log"
-date=`date '+%Y%m%d %H:%M'`
+date=`date '+%Y%m%d-%H%M'` # no usar ':' en filenames eso da error
 current_date=`date +'%Y-%m-%d'`
 current_time=`date +'%H:%M'`
 
@@ -26,11 +25,12 @@ fi
 find $backups_dir/[a-z]* -name \*.sql -mtime +3 -exec rm {} \;
 find $backups_dir/[a-z]* -name \*.tar.bz2 -mtime +3 -exec rm {} \;
 
-mysqldump --user=$user --password=$password $db_name > $backups_dir/dump-$db_name-$date.sql
+dump_file="dump-$db_name-$date.sql"
+mysqldump --user=$user --password=$password $db_name > "$backups_dir/$dump_file"
 
 backup_file="backup-$db_name-$date.tar.bz2"
-cd $backups_dir && tar -cvzf $backup_file *.sql 
-
+cd $backups_dir
+tar -cvzf "$backup_file" "$dump_file" 
+ls
 echo "Backup Database: $db_name. Backup Date: $current_date $current_time" | mutt -a "$backup_file" -s "Backup: $db_name" -- $receiver
-cd $current
-
+echo "Backup realizado correctamenete. db: $db_name; receiver: $receiver"

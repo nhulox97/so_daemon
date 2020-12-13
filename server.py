@@ -42,9 +42,15 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             elif option == 'users':
                 value = subprocess.check_output([script, option])
         elif menu == 'wikidaemon':
-            word = params['word']
             script = './scripts/wikidaemon.sh'
+            word = params['word']
             value = subprocess.check_output([script, word])
+        elif menu == 'backup':
+            script = './scripts/backup.sh'
+            db = params['db']
+            receiver = params['receiver']
+            value = subprocess.check_output([script, db, receiver])
+
         self.wfile.write(value)
         self.send_response(200)
 

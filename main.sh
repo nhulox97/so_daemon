@@ -56,44 +56,54 @@ functions_script(){
             1)
                 clear
                 curl -d "menu=functions&option=storage" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: storage'
                 ;;
 
             2)
                 clear
                 curl -d "menu=functions&option=info" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: info'
                 ;;
             3)
                 clear
                 curl -d "menu=functions&option=process" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: process'
                 ;;
             4)
                 clear
                 curl -d "menu=functions&option=dirs" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: dirs'
                 ;;
             5)
                 clear
                 curl -d "menu=functions&option=updates" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: updates'
                 ;;
             6)
                 clear
                 read -p "> Ingrese el nombre del proceso a buscar: " process
                 curl -d "menu=functions&option=search&query=$process" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log "Se solicito la funcion: search, proceso: $process"
                 ;;
             7)
                 clear
                 curl -d "menu=functions&option=ram" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: ram'
                 ;;
             8)
                 clear
                 curl -d "menu=functions&option=network" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: network'
                 ;;
             9)
                 clear
                 curl -d "menu=functions&option=user" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: user'
                 ;;
             10)
                 clear
                 curl -d "menu=functions&option=users" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se solicito la funcion: users'
                 ;;
             11)
                 clear;;
@@ -129,6 +139,7 @@ wikidaemon_script(){
         wikidaemon_menu
         read -p '> Ingrese la palabra: ' word
         curl -d "menu=wikidaemon&word=$word" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+        add_log "Se consulto la funcion: $word"
         echo 'Desea realizar otra operacion? (1)si (2)no?'
         read -p '> Ingrese su opcion: ' wikidaemon_repeat
         if [ $wikidaemon_repeat -eq 2 ]; then
@@ -186,6 +197,21 @@ _script(){
         fi
     done
 }
+
+backup_script() {
+    password='dosv2018'
+    user='nhulox97'
+
+    echo 'Menu de backup'
+    echo ''
+    echo 'Bases de datos disponibles'
+    mysql --user=$user --password=$password -e 'show databases;'
+    read -p '> Ingrese el nombre de la base de datos a respaldar: ' db
+    echo ''
+    read -p '> Ingrese el correo al que se enviara el backup: ' receiver
+    curl -d "menu=backup&db=$db&receiver=$receiver" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+    add_log "Se hizo el backup de la db: $db, se envio a: $receiver"
+}
 # Variable pivote para el menu principal
 main_option=0
 while [ $main_option -ne 6 ]; do
@@ -209,13 +235,14 @@ while [ $main_option -ne 6 ]; do
             clear;;
         3)
             clear
-            echo $main_option;;
+            ;;
         4)
             clear
             echo $main_option;;
         5)
-            clear
-            echo $main_option;;
+            echo '######################################################################'
+            backup_script
+            ;;
         6) clear
             clear;;
     esac 
