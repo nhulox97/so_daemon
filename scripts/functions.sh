@@ -34,5 +34,5 @@ case $option in
         getent passwd | awk -F: '{print $1, "-", $5}'
         ;;
     *)
-        echo 'No existe la funcion'
+        echo 'No existe la funcion';;
 esac

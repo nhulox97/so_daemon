@@ -18,28 +18,33 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         params = dict(qc.split("=") for qc in post_body.split("&"))
         menu = params['menu']
         if menu == 'functions':
+            script = './scripts/functions.sh'
             option = params['option']
             if option == 'storage':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'info':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'process':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'dirs':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'updates':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'search':
                 query = params['query']
-                value = subprocess.check_output(['./scripts/functions.sh', option, query])
+                value = subprocess.check_output([script, option, query])
             elif option == 'ram':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'network':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'user':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
             elif option == 'users':
-                value = subprocess.check_output(['./scripts/functions.sh', option])
+                value = subprocess.check_output([script, option])
+        elif menu == 'wikidaemon':
+            word = params['word']
+            script = './scripts/wikidaemon.sh'
+            value = subprocess.check_output([script, word])
         self.wfile.write(value)
         self.send_response(200)
 
