@@ -15,18 +15,31 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_POST(self):
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
-        query_components = dict(qc.split("=") for qc in post_body.split("&"))
-        menu = query_components['menu']
+        params = dict(qc.split("=") for qc in post_body.split("&"))
+        menu = params['menu']
         if menu == 'functions':
-            option = query_components['option']
+            option = params['option']
             if option == 'storage':
                 value = subprocess.check_output(['./scripts/functions.sh', option])
             elif option == 'info':
-                value = 'info'
+                value = subprocess.check_output(['./scripts/functions.sh', option])
             elif option == 'process':
-                value = 'process'
+                value = subprocess.check_output(['./scripts/functions.sh', option])
             elif option == 'dirs':
-                value = 'dirs'
+                value = subprocess.check_output(['./scripts/functions.sh', option])
+            elif option == 'updates':
+                value = subprocess.check_output(['./scripts/functions.sh', option])
+            elif option == 'search':
+                query = params['query']
+                value = subprocess.check_output(['./scripts/functions.sh', option, query])
+            elif option == 'ram':
+                value = subprocess.check_output(['./scripts/functions.sh', option])
+            elif option == 'network':
+                value = subprocess.check_output(['./scripts/functions.sh', option])
+            elif option == 'user':
+                value = subprocess.check_output(['./scripts/functions.sh', option])
+            elif option == 'users':
+                value = subprocess.check_output(['./scripts/functions.sh', option])
         self.wfile.write(value)
         self.send_response(200)
 

@@ -50,24 +50,31 @@ functions_script(){
                 ;;
             5)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=updates" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             6)
                 clear
-                echo $functions_option;;
+                read -p "> Ingrese el nombre del proceso a buscar: " process
+                curl -d "menu=functions&option=search&query=$process" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             7)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=ram" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             8)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=network" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             9)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=user" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             10)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=users" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             11)
-                clear
+                clear;;
         esac    
         if [ $functions_option -ne 11 ]; then
             echo 'Menu de funciones'
