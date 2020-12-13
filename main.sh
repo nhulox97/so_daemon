@@ -33,16 +33,21 @@ functions_script(){
         case $functions_option in
             1)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=storage" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
+
             2)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=info" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             3)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=process" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             4)
                 clear
-                echo $functions_option;;
+                curl -d "menu=functions&option=dirs" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                ;;
             5)
                 clear
                 echo $functions_option;;
