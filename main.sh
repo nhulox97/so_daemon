@@ -1,29 +1,26 @@
 #!/bin/bash
 
 backups_dir="./backups"
-logfile="$backups_dir/logfile.log"
+logfile="./logfile.log"
 
 add_log(){
     action=$1
     current_date=`date +'%Y-%m-%d'`
     current_time=`date +'%H:%M'`
     host=$USER
-    echo "$host-$action-$current_date-$current_time" >> $logfile
+    echo "$host-$action-$current_date $current_time" >> $logfile
 }
-
-if ! [[ -a $backups_dir ]]; then
-    mkdir $backups_dir 
-    if ! [[ -a $logfile ]]; then
-        touch $logfile
-        add_log 'Se creo el archivo de logs'
-    fi
-    add_log 'Se creo el directorio de backups'  
-fi
 
 if ! [[ -a $logfile ]]; then
     touch $logfile
     add_log 'Se creo el archivo de logs'
 fi
+
+if ! [[ -a $backups_dir ]]; then
+    mkdir $backups_dir 
+    add_log 'Se creo el directorio de backups'  
+fi
+
 
 main_menu(){
     echo 'Menu del demonio'
