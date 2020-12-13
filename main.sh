@@ -5,10 +5,10 @@ logfile="$backups_dir/logfile.log"
 
 add_log(){
     action=$1
-    date=`date +'%Y-%m-%d'`
-    time=`date +'%H:%M'`
+    current_date=`date +'%Y-%m-%d'`
+    current_time=`date +'%H:%M'`
     host=$USER
-    echo "$host-$action-$date-$time" >> $logfile
+    echo "$host-$action-$current_date-$current_time" >> $logfile
 }
 
 if ! [[ -a $backups_dir ]]; then
