@@ -87,24 +87,39 @@ functions_script(){
 }
 
 wikidaemon_menu(){
-    echo 'Menu de WikiDaemon'
-    echo '(1) Chilate'
-    echo '(2) Python'
-    echo '(3) ReactJs'
-    echo '(4) Horchata'
-    echo '(5) Pupusa'
-    echo '(6) Ayote' 
-    echo '(7) Heroku'
-    echo '(8) Empanada'
-    echo '(9) GNU/Linux'
-    echo '(10) Github'
-    echo '(11) Salir'
+    echo 'Funciones dispibles'
+    echo '- Chilate'
+    echo '- Python'
+    echo '- ReactJs'
+    echo '- Horchata'
+    echo '- Pupusa'
+    echo '- Ayote' 
+    echo '- Heroku'
+    echo '- Empanada'
+    echo '- GNU/Linux'
+    echo '- Github'
 }
 
 wikidaemon_script(){
     wikidaemon_option=0
-    while [ $wikidaemon_option -ne 11 ]; do
+    while [ $wikidaemon_option -ne 2 ]; do
+        echo 'Menu de WikiDaemon'  
         wikidaemon_menu
+        read -p '> Ingrese la palabra: ' word
+        curl -d "menu=wikidaemon&word=$word" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+        echo 'Desea realizar otra operacion? (1)si (2)no?'
+        read -p '> Ingrese su opcion: ' wikidaemon_repeat
+        if [ $wikidaemon_repeat -eq 2 ]; then
+            wikidaemon_option=2
+        fi
+    done
+}
+
+_script(){
+    wikidaemon_option=0
+    while [ $wikidaemon_option -ne 11 ]; do
+        echo 'Menu de WikiDaemon'  
+        read -p '> Ingrese la palabra: ' word
         read -p "> Ingrese su opcion: " wikidaemon_option
         case $wikidaemon_option in
             1)
@@ -169,7 +184,7 @@ while [ $main_option -ne 6 ]; do
             clear
             echo '######################################################################'
             wikidaemon_script
-            echo $main_option;;
+            clear;;
         3)
             clear
             echo $main_option;;
