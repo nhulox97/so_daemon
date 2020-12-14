@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Author: Sergio Bernal (nhulox97)                                     
+
 backups_dir="./backups"
 logfile="./logfile.log"
 sudopass='dosv2018'
@@ -272,6 +274,72 @@ maintenance_script(){
 
 }
 
+awk_menu(){
+    echo 'Menu de AWK-Queries'
+    echo '(1) Consultar por nombres o apellidos'
+    echo '(2) Consultar por fecha de registro'
+    echo '(3) Contar numero total de registros'
+    echo '(4) Mostrar registros que no esten completos'
+    echo '(5) Mostrar registros con campos NULL'
+    echo '(6) Contar numero de estudiantes de INGENIERIA CIVIL'
+    echo '(7) Ordenar por nombre'
+    echo '(8) Ordenar por apellido'
+    echo '(9) Ordenar por carrera'
+    echo '(10) Salir'
+}
+
+awk_scripts(){
+    awk_option=0
+    while [ $awk_option -ne 10 ]; do
+        awk_menu
+        read -p "> Ingrese su opcion: " awk_option
+        case $awk_option in
+            1)
+                clear
+                echo $awk_option;;
+            2)
+                clear
+                echo $awk_option;;
+            3)
+                clear
+                echo $awk_option;;
+            4)
+                clear
+                echo $awk_option;;
+            5)
+                clear
+                echo $awk_option;;
+            6)
+                clear
+                echo $awk_option;;
+            7)
+                clear
+                echo $awk_option;;
+            8)
+                clear
+                echo $awk_option;;
+            9)
+                clear
+                echo $awk_option;;
+            10)
+                clear
+                ;;
+            *)
+                clear
+                echo 'Opcion invalida'
+                ;;
+        esac    
+        if [ $awk_option -ne 10 ]; then
+            echo 'Menu de AWK-Queries'
+            read -p '> Desea realizar otra operacion? (1)si (2)no: ' awk_repeat
+            if [ $awk_repeat -eq 2 ]; then
+                awk_option=10
+            fi
+        fi
+    done
+
+}
+
 # Variable pivote para el menu principal
 main_option=0
 while [ $main_option -ne 6 ]; do
@@ -301,6 +369,11 @@ while [ $main_option -ne 6 ]; do
             ;;
         3)
             clear
+            echo '######################################################################'
+            awk_scripts
+            echo 'Saliendo de AWK-Queries del demonio'
+            echo '######################################################################'
+            echo ''
             ;;
         4)
             # mantenimiento
