@@ -2,6 +2,7 @@
 
 backups_dir="./backups"
 logfile="./logfile.log"
+sudopass='dosv2018'
 
 add_log(){
     action=$1
@@ -149,50 +150,50 @@ wikidaemon_script(){
 }
 
 _script(){
-    wikidaemon_option=0
-    while [ $wikidaemon_option -ne 11 ]; do
+    maintenance_option=0
+    while [ $maintenance_option -ne 11 ]; do
         echo 'Menu de WikiDaemon'  
         read -p '> Ingrese la palabra: ' word
-        read -p "> Ingrese su opcion: " wikidaemon_option
-        case $wikidaemon_option in
+        read -p "> Ingrese su opcion: " maintenance_option
+        case $maintenance_option in
             1)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             2)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             3)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             4)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             5)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             6)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             7)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             8)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             9)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             10)
                 clear
-                echo $wikidaemon_option;;
+                echo $maintenance_option;;
             11)
                 clear
         esac    
-        if [ $wikidaemon_option -ne 11 ]; then
+        if [ $maintenance_option -ne 11 ]; then
             echo 'Menu de WikiDaemon'
             read -p '> Desea realizar otra operacion? (1)si (2)no: ' wikidaemon_repeat
             if [ $wikidaemon_repeat -eq 2 ]; then
-                wikidaemon_option=11
+                maintenance_option=11
             fi
         fi
     done
@@ -212,6 +213,65 @@ backup_script() {
     curl -d "menu=backup&db=$db&receiver=$receiver" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
     add_log "Se hizo el backup de la db: $db, se envio a: $receiver"
 }
+
+
+maintenance_menu(){
+    echo 'Menu de mantenimiento'
+    echo '(1) Enviar archivo de logs'
+    echo '(2) Enviar respaldo a equipo remoto'
+    echo '(3) Detener servicio'
+    echo '(4) Reiniciar servicio'
+    echo '(5) Salir'
+}
+
+maintenance_script(){
+    maintenance_option=0
+    while [ $maintenance_option -ne 5 ]; do
+        maintenance_menu
+        read -p "> Ingrese su opcion: " maintenance_option
+        case $maintenance_option in
+            1)
+                clear
+                read -p '> Ingrese el correo al que se enviara el backup: ' receiver
+                curl -d "menu=maintenance&option=log&receiver=$receiver" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log "Se envio el archivo log a: $receiver"
+                echo ''
+                ;;
+            2)
+                clear
+                echo $maintenance_option;;
+            3)
+                clear
+                echo $sudopass | sudo -S service sergiodaemon stop
+                add_log 'Se detuvo el demonio'
+                echo '' 
+                ;;
+            4)
+                clear
+                echo $sudopass | sudo -S service sergiodaemon restart
+                add_log 'Se reinicio el demonio'
+                echo '' 
+                ;;
+            5)
+                clear
+                echo ''
+                ;;
+            *)
+                clear
+                echo 'Opcion invalida'
+                ;;
+        esac    
+        if [ $maintenance_option -ne 5 ]; then
+            echo 'Menu de mantenimiento'
+            read -p '> Desea realizar otra operacion? (1)si (2)no: ' maintenance_repeat
+            if [ $maintenance_repeat -eq 2 ]; then
+                maintenance_option=5
+            fi
+        fi
+    done
+
+}
+
 # Variable pivote para el menu principal
 main_option=0
 while [ $main_option -ne 6 ]; do
@@ -226,25 +286,43 @@ while [ $main_option -ne 6 ]; do
             clear
             echo '######################################################################'
             functions_script
-            clear;;
+            echo 'Saliendo de las funciones del demonio'
+            echo '######################################################################'
+            echo ''
+            ;;
         2)
             # Agente inteligente
             clear
             echo '######################################################################'
             wikidaemon_script
-            clear;;
+            echo 'Saliendo de la wiki del demonio'
+            echo '######################################################################'
+            echo ''
+            ;;
         3)
             clear
             ;;
         4)
+            # mantenimiento
             clear
-            echo $main_option;;
+            echo '######################################################################'
+            maintenance_script
+            echo 'Saliendo del mantenimiento del demonio'
+            echo ''
+            ;;
         5)
+            # backup
             echo '######################################################################'
             backup_script
-            clear;;
+            echo 'Saliendo del backup del demonio'
+            echo '######################################################################'
+            echo ''
+            ;;
         6) 
             clear;;
+        *)
+            echo 'Opcion invalida'
+            ;;
     esac 
     if [ $main_option -ne 6 ]; then
         echo 'Menu de principal'

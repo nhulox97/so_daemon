@@ -46,6 +46,12 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             db = params['db']
             receiver = params['receiver']
             value = subprocess.check_output([script, db, receiver])
+        elif menu == 'maintenance':
+            script = './scripts/maintenance.sh'
+            option = params['option']
+            if option == 'log':
+                receiver = params['receiver']
+                value = subprocess.check_output([script, option, receiver])
 
         self.wfile.write(value)
         self.send_response(200)
