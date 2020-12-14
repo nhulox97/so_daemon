@@ -242,8 +242,8 @@ while [ $main_option -ne 6 ]; do
         5)
             echo '######################################################################'
             backup_script
-            ;;
-        6) clear
+            clear;;
+        6) 
             clear;;
     esac 
     if [ $main_option -ne 6 ]; then

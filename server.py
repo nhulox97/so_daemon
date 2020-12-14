@@ -5,13 +5,9 @@ import subprocess
 PORT = 8000
 
 class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.wfile.write("Sergio's server")
 
-    """
-    El formato para obtener los parametros es el siguiente:
-    "menu": 'menu_name' el identificador del menu del daemon
-    "option": 'option name' el identificador de la 
-    opcion del menu del dameon
-    """
     def do_POST(self):
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
@@ -62,3 +58,7 @@ httpd = SocketServer.TCPServer(("", PORT), Handler)
 
 print "serving at port", PORT
 httpd.serve_forever()
+# El formato para obtener los parametros es el siguiente:
+# "menu": 'menu_name' el identificador del menu del daemon
+# "option": 'option name' el identificador de la 
+# opcion del menu del dameon
