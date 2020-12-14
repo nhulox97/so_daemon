@@ -13,6 +13,7 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         post_body = self.rfile.read(content_len)
         params = dict(qc.split("=") for qc in post_body.split("&"))
         menu = params['menu']
+        value = '404 - Option not found'
         if menu == 'functions':
             script = './scripts/functions.sh'
             option = params['option']
@@ -37,6 +38,8 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 value = subprocess.check_output([script, option])
             elif option == 'users':
                 value = subprocess.check_output([script, option])
+            else:
+                value = 'Opcion invalida'
         elif menu == 'wikidaemon':
             script = './scripts/wikidaemon.sh'
             word = params['word']
@@ -52,6 +55,33 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             if option == 'log':
                 receiver = params['receiver']
                 value = subprocess.check_output([script, option, receiver])
+            else:
+                value = 'Opcion invalida'
+        elif menu == 'awk':
+            script = './scripts/awk.sh'
+            option = params['option']
+            if option == '1':
+                value = subprocess.check_output([script, option])
+            elif option == '2':
+                value = subprocess.check_output([script, option])
+            elif option == '3':
+                value = subprocess.check_output([script, option])
+            elif option == '4':
+                value = subprocess.check_output([script, option])
+            elif option == '5':
+                value = subprocess.check_output([script, option])
+            elif option == '6':
+                value = subprocess.check_output([script, option])
+            elif option == '7':
+                value = subprocess.check_output([script, option])
+            elif option == '8':
+                value = subprocess.check_output([script, option])
+            elif option == '9':
+                value = subprocess.check_output([script, option])
+            elif option == '10':
+                value = subprocess.check_output([script, option])
+            else:
+                value = 'Opcion invalida'
 
         self.wfile.write(value)
         self.send_response(200)
