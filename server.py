@@ -3,6 +3,13 @@ import SocketServer
 import os
 import subprocess
 PORT = 8000
+'''
+Author: Sergio Bernal (nhulox97)
+'''
+# El formato para obtener los parametros es el siguiente:
+# "menu": 'menu_name' el identificador del menu del daemon
+# "option": 'option name' el identificador de la 
+# opcion del menu del dameon
 
 class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -78,8 +85,6 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 value = subprocess.check_output([script, option])
             elif option == '9':
                 value = subprocess.check_output([script, option])
-            elif option == '10':
-                value = subprocess.check_output([script, option])
             else:
                 value = 'Opcion invalida'
 
@@ -94,7 +99,3 @@ httpd = SocketServer.TCPServer(("", PORT), Handler)
 
 print "serving at port", PORT
 httpd.serve_forever()
-# El formato para obtener los parametros es el siguiente:
-# "menu": 'menu_name' el identificador del menu del daemon
-# "option": 'option name' el identificador de la 
-# opcion del menu del dameon

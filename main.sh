@@ -290,42 +290,70 @@ awk_menu(){
 
 awk_scripts(){
     awk_option=0
+    file='./data.csv'
     while [ $awk_option -ne 10 ]; do
         awk_menu
         read -p "> Ingrese su opcion: " awk_option
         case $awk_option in
             1)
                 clear
-                echo $awk_option;;
+                # awk '{print "Esto es una prueba usando awk "}'
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk por nombres y apellidos'
+                ;;
             2)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk por fecha de registro'
+                ;;
             3)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk el numero total de registros'
+                ;;
             4)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk registros incompletos'
+                ;;
             5)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk registros con campos null'
+                ;;
             6)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk el numero de estudiantes de ingenieria civil'
+                ;;
             7)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk por registros ordenados por nombre'
+                ;;
             8)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk por registros ordenados por apellido'
+                ;;
             9)
                 clear
-                echo $awk_option;;
+                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log 'Se consulto con awk por registros ordenados por carrera'
+                ;;
             10)
                 clear
                 ;;
             *)
-                clear
                 echo 'Opcion invalida'
                 ;;
         esac    
@@ -394,7 +422,6 @@ while [ $main_option -ne 6 ]; do
         6) 
             clear;;
         *)
-            clear
             echo 'Opcion invalida'
             ;;
     esac 
