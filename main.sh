@@ -242,13 +242,13 @@ maintenance_script(){
                 echo $maintenance_option;;
             3)
                 clear
-                echo $sudopass | sudo -S service sergiodaemon stop
+                echo $sudopass | sudo -S systemctl stop sergiodaemon
                 add_log 'Se detuvo el demonio'
                 echo '' 
                 ;;
             4)
                 clear
-                echo $sudopass | sudo -S service sergiodaemon restart
+                echo $sudopass | sudo -S systemctl restart sergiodaemon
                 add_log 'Se reinicio el demonio'
                 echo '' 
                 ;;
@@ -321,6 +321,7 @@ while [ $main_option -ne 6 ]; do
         6) 
             clear;;
         *)
+            clear
             echo 'Opcion invalida'
             ;;
     esac 
