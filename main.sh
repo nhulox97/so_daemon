@@ -310,15 +310,18 @@ awk_scripts(){
                 if [ $query_option -eq 1 ] || [ $query_option -eq 2 ]; then
                     if [ $query_option -eq 1 ];then
                         read -p '> Ingrese el nombre a buscar: ' query
-                        awk -F"," -v name="$query" 'BEGIN {print "Buscar registro por nombre"} {
-                            split($2,splitted_name," ");
+                        awk -F"," -v name="$query" 'BEGIN {print "Buscar registro por nombre"; name=toupper(name)} {
+                            split(toupper($2),splitted_name," ");
                             if (name == $2 || name == splitted_name[1] || name == splitted_name[2]) { print $0 }
                         } END {print "Resultados para el nombre: ", name}' $file
                         # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                         add_log "Se consulto con awk por el nombre: $query"
                     elif [ $query_option -eq 2 ];then
                         read -p '> Ingrese el apellido a buscar: ' query
-                        awk -F"," -v apellido="$query" 'BEGIN {print "Buscar registro por apellido"} {print $1} END {print "Resultados para el apellido: ",apellido}' $file
+                        awk -F"," -v lastname="$query" 'BEGIN {print "Buscar registro por apellido"; lastname=toupper(lastname)} {
+                            split(toupper($1),splitted_name," ");
+                            if (lastname == $1 || lastname == splitted_name[1] || lastname == splitted_name[2]) { print $0 }
+                        } END {print "Resultados para el apellido: ", lastname}' $file
                         # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                         add_log "Se consulto con awk por el apellido: $query"
                     fi
