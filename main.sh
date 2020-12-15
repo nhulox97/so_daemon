@@ -223,12 +223,13 @@ maintenance_menu(){
     echo '(2) Enviar respaldo a equipo remoto'
     echo '(3) Detener servicio'
     echo '(4) Reiniciar servicio'
-    echo '(5) Salir'
+    echo '(5) Ver estado del servicio'
+    echo '(6) Salir'
 }
 
 maintenance_script(){
     maintenance_option=0
-    while [ $maintenance_option -ne 5 ]; do
+    while [ $maintenance_option -ne 6 ]; do
         maintenance_menu
         read -p "> Ingrese su opcion: " maintenance_option
         case $maintenance_option in
@@ -256,6 +257,12 @@ maintenance_script(){
                 ;;
             5)
                 clear
+                echo $sudopass | sudo -S systemctl status sergiodaemon
+                add_log 'Se detuvo el demonio'
+                echo ''
+                ;;
+            6)
+                clear
                 echo ''
                 ;;
             *)
@@ -263,11 +270,11 @@ maintenance_script(){
                 echo 'Opcion invalida'
                 ;;
         esac    
-        if [ $maintenance_option -ne 5 ]; then
+        if [ $maintenance_option -ne 6 ]; then
             echo 'Menu de mantenimiento'
             read -p '> Desea realizar otra operacion? (1)si (2)no: ' maintenance_repeat
             if [ $maintenance_repeat -eq 2 ]; then
-                maintenance_option=5
+                maintenance_option=6
             fi
         fi
     done
