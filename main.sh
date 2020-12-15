@@ -310,7 +310,10 @@ awk_scripts(){
                 if [ $query_option -eq 1 ] || [ $query_option -eq 2 ]; then
                     if [ $query_option -eq 1 ];then
                         read -p '> Ingrese el nombre a buscar: ' query
-                        awk -F"," -v nombre="$query" 'BEGIN {print "Buscar registro por nombre"} {print $1} END {print "Resultados para el nombre: ", nombre}' $file
+                        awk -F"," -v name="$query" 'BEGIN {print "Buscar registro por nombre"} {
+                            split($2,splitted_name," ");
+                            if (name == $2 || name == splitted_name[1] || name == splitted_name[2]) { print $0 }
+                        } END {print "Resultados para el nombre: ", name}' $file
                         # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                         add_log "Se consulto con awk por el nombre: $query"
                     elif [ $query_option -eq 2 ];then
