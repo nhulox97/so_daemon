@@ -304,10 +304,25 @@ awk_scripts(){
         case $awk_option in
             1)
                 clear
-                # awk '{print "Esto es una prueba usando awk "}'
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk por nombres y apellidos'
+                echo 'Consular por nombre(1)'
+                echo 'Consular por apellido(2)'
+                read -p '> Ingrese su opcion: ' query_option
+                if [ $query_option -eq 1 ] || [ $query_option -eq 2 ]; then
+                    if [ $query_option -eq 1 ];then
+                        read -p '> Ingrese el nombre a buscar: ' query
+                        awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                        # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                        add_log "Se consulto con awk por el nombre: $query"
+                    elif [ $query_option -eq 2 ];then
+                        read -p '> Ingrese el apellido a buscar: ' query
+                        awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                        # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                        add_log "Se consulto con awk por el apellido: $query"
+                    fi
+                else
+                    echo 'Opcion incorrecta'
+                    echo ''
+                fi
                 ;;
             2)
                 clear
@@ -327,64 +342,64 @@ awk_scripts(){
                 if ($1 == "" || $2 == "" || $3 == "" || $4 == "" || $5 == "" || $6 == "" || $7 == "") {
                     print $0
                 }
-                }' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk registros incompletos'
-                ;;
-            5)
-                clear
-                awk -F"," 'BEGIN {print "Registros con campos NULL"} {
-                if ($1 == "NULL" || $2 == "NULL" || $3 == "NULL" || $4 == "NULL" || $5 == "NULL" || $6 == "NULL" || $7 == "NULL") {
-                    print $0
-                }
-                }' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk registros con campos NULL'
-                ;;
-            6)
-                clear
-                awk -F"," 'BEGIN {print "Total de estudiantes de INGENIERIA CIVIL"} {
-                carrera=toupper($7)
-                if (carrera == "INGENIERIA CIVIL") {
-                    counter++
-                }
-                } END {print "Total estudiantes: ", counter}' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk el numero de estudiantes de ingenieria civil'
-                ;;
-            7)
-                clear
-                awk -F"," 'BEGIN {print "Ordenar por nombre"} {print $2 |"sort -u"}' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk por registros ordenados por nombre'
-                ;;
-            8)
-                clear
-                awk -F"," 'BEGIN {print "Ordenar por apellido"} {print $1 |"sort -u"}' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk por registros ordenados por apellido'
-                ;;
-            9)
-                clear
-                awk -F"," 'BEGIN {print "Ordenar por carrera"} {print $7 |"sort -u"}' $file
-                # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk por registros ordenados por carrera'
-                ;;
-            10)
-                clear
-                ;;
-            *)
-                echo 'Opcion invalida'
-                ;;
-        esac    
-        if [ $awk_option -ne 10 ]; then
-            echo 'Menu de AWK-Queries'
-            read -p '> Desea realizar otra operacion? (1)si (2)no: ' awk_repeat
-            if [ $awk_repeat -eq 2 ]; then
-                awk_option=10
-            fi
-        fi
-    done
+        }' $file
+    # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+    add_log 'Se consulto con awk registros incompletos'
+    ;;
+5)
+    clear
+    awk -F"," 'BEGIN {print "Registros con campos NULL"} {
+    if ($1 == "NULL" || $2 == "NULL" || $3 == "NULL" || $4 == "NULL" || $5 == "NULL" || $6 == "NULL" || $7 == "NULL") {
+        print $0
+    }
+}' $file
+# curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+add_log 'Se consulto con awk registros con campos NULL'
+;;
+6)
+    clear
+    awk -F"," 'BEGIN {print "Total de estudiantes de INGENIERIA CIVIL"} {
+    carrera=toupper($7)
+    if (carrera == "INGENIERIA CIVIL") {
+        counter++
+    }
+} END {print "Total estudiantes: ", counter}' $file
+# curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+add_log 'Se consulto con awk el numero de estudiantes de ingenieria civil'
+;;
+7)
+    clear
+    awk -F"," 'BEGIN {print "Ordenar por nombre"} {print $2 |"sort -u"}' $file
+    # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+    add_log 'Se consulto con awk por registros ordenados por nombre'
+    ;;
+8)
+    clear
+    awk -F"," 'BEGIN {print "Ordenar por apellido"} {print $1 |"sort -u"}' $file
+    # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+    add_log 'Se consulto con awk por registros ordenados por apellido'
+    ;;
+9)
+    clear
+    awk -F"," 'BEGIN {print "Ordenar por carrera"} {print $7 |"sort -u"}' $file
+    # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+    add_log 'Se consulto con awk por registros ordenados por carrera'
+    ;;
+10)
+    clear
+    ;;
+*)
+    echo 'Opcion invalida'
+    ;;
+esac    
+if [ $awk_option -ne 10 ]; then
+    echo 'Menu de AWK-Queries'
+    read -p '> Desea realizar otra operacion? (1)si (2)no: ' awk_repeat
+    if [ $awk_repeat -eq 2 ]; then
+        awk_option=10
+    fi
+fi
+done
 
 }
 
