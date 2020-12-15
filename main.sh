@@ -316,15 +316,23 @@ awk_scripts(){
                 ;;
             4)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN {print "Registros con campos vacios"} {
+                if ($1 == "" || $2 == "" || $3 == "" || $4 == "" || $5 == "" || $6 == "" || $7 == "") {
+                    print $0
+                }
+                }' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk registros incompletos'
                 ;;
             5)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN {print "Registros con campos NULL"} {
+                if ($1 == "NULL" || $2 == "NULL" || $3 == "NULL" || $4 == "NULL" || $5 == "NULL" || $6 == "NULL" || $7 == "NULL") {
+                    print $0
+                }
+                }' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk registros con campos null'
+                add_log 'Se consulto con awk registros con campos NULL'
                 ;;
             6)
                 clear
