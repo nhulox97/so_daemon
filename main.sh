@@ -310,7 +310,7 @@ awk_scripts(){
                 ;;
             3)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN { print "Contar numerto toal de registros" } END {print "Numero de registros: ", NR}' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk el numero total de registros'
                 ;;
@@ -328,25 +328,30 @@ awk_scripts(){
                 ;;
             6)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN {print "Total de estudiantes de INGENIERIA CIVIL"} {
+                carrera=toupper($7)
+                if (carrera == "INGENIERIA CIVIL") {
+                    counter++
+                }
+                } END {print "Total estudiantes: ", counter}' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk el numero de estudiantes de ingenieria civil'
                 ;;
             7)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN {print "Ordenar por nombre"} {print $2 |"sort -u"}' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk por registros ordenados por nombre'
                 ;;
             8)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN {print "Ordenar por apellido"} {print $1 |"sort -u"}' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk por registros ordenados por apellido'
                 ;;
             9)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                awk -F"," 'BEGIN {print "Ordenar por carrera"} {print $7 |"sort -u"}' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk por registros ordenados por carrera'
                 ;;
