@@ -9,6 +9,6 @@ backups_dir='./backups/'
 find ./[a-z]* -name \*.tar.bz2 -mtime +3 -exec rm {} \;
 backup_file="backup-$date.tar.bz2"
 tar -czvf "$backup_file" "$backups_dir"
-
-sleep 5
+sshpass -p "fifa2016" scp $current_dir/$backup_file nhulox@192.168.43.64:/home/nhulox/test/$backup_file
+sleep 2
 rm "$backup_file"
