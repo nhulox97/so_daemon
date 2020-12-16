@@ -151,56 +151,6 @@ wikidaemon_script(){
     done
 }
 
-_script(){
-    maintenance_option=0
-    while [ $maintenance_option -ne 11 ]; do
-        echo 'Menu de WikiDaemon'  
-        read -p '> Ingrese la palabra: ' word
-        read -p "> Ingrese su opcion: " maintenance_option
-        case $maintenance_option in
-            1)
-                clear
-                echo $maintenance_option;;
-            2)
-                clear
-                echo $maintenance_option;;
-            3)
-                clear
-                echo $maintenance_option;;
-            4)
-                clear
-                echo $maintenance_option;;
-            5)
-                clear
-                echo $maintenance_option;;
-            6)
-                clear
-                echo $maintenance_option;;
-            7)
-                clear
-                echo $maintenance_option;;
-            8)
-                clear
-                echo $maintenance_option;;
-            9)
-                clear
-                echo $maintenance_option;;
-            10)
-                clear
-                echo $maintenance_option;;
-            11)
-                clear
-        esac    
-        if [ $maintenance_option -ne 11 ]; then
-            echo 'Menu de WikiDaemon'
-            read -p '> Desea realizar otra operacion? (1)si (2)no: ' wikidaemon_repeat
-            if [ $wikidaemon_repeat -eq 2 ]; then
-                maintenance_option=11
-            fi
-        fi
-    done
-}
-
 backup_script() {
     password='dosv2018'
     user='nhulox97'
@@ -252,10 +202,12 @@ maintenance_script(){
                 backup_file="backup-$date.tar.bz2"
                 tar -czvf "$backup_file" "$backups_dir"
                 remote='nhulox@192.168.43.64'
-                remote_dir=':/home/nhulox/test/'
+                remote_dir=':/home/nhulox/backups/'
+                # Es necesario tener instalado sshpass
                 sshpass -p "fifa2016" scp $current_dir/$backup_file $remote$remote_dir$backup_file
                 sleep 2
                 rm "$backup_file"
+                echo -e "Se envio backups $backup_file al equipo remoto $remote\n"
                 add_log "Se envio backups $backup_file al equipo remoto $remote"
                 ;;
             3)
@@ -463,6 +415,7 @@ while [ $main_option -ne 6 ]; do
             echo '######################################################################'
             maintenance_script
             echo 'Saliendo del mantenimiento del demonio'
+            echo '######################################################################'
             echo ''
             ;;
         5)
