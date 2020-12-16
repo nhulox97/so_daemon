@@ -1,12 +1,21 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
-# Provides: sergiodaemon
-# Required-Start: $local_fs $network $syslog $ $remote_fs
-# Required-Stop:
-# Default-Start: 2 3 4 5
-# Default-Stop: 0 1 6
-# Description: My daemon
+
+# Provides:         sergiodaemon
+
+# Required-Start:   $all
+
+# Required-Stop:    $syslog
+
+# Default-Start:    2 3 4 5
+
+# Default-Stop:     0 1 6
+
+# Short-Desciption: Start server python
+
+# Description:      Habilitar server python
+
 ### END INIT INFO
  
 NAME=sergiodaemon
@@ -14,9 +23,7 @@ DESC="Demonio de servicio"
 PIDFILE="/var/run/${NAME}.pid"
 LOGFILE="/var/log/${NAME}.log"
 
-#indicamos que vamos a ejecutar un archivo Python
 DAEMON="/usr/bin/python"
-#Ruta del archivo
 DAEMON_OPTS="/home/nhulox97/DevProjects/so_daemon/server.py"
  
 START_OPTS="--start --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} ${DAEMON_OPTS}"
@@ -53,4 +60,5 @@ case "$1" in
 esac
  
 exit 0
+
 
