@@ -225,7 +225,7 @@ maintenance_script(){
             5)
                 clear
                 echo $sudopass | sudo -S systemctl status sergiodaemon
-                add_log 'Se detuvo el demonio'
+                add_log 'Se consulto el estado del demonio'
                 echo ''
                 ;;
             6)
@@ -279,7 +279,7 @@ awk_scripts(){
                         read -p '> Ingrese el nombre a buscar: ' query
                         awk -F"," -v name="$query" 'BEGIN {print "Buscar registro por nombre"; name=toupper(name)} {
                             split(toupper($2),splitted_name," ");
-                            if (name == $2 || name == splitted_name[1] || name == splitted_name[2]) { print $0 }
+                            if (name == $2 || name == splitted_name[1] || name == splitted_name[2]) { printf "%24s %24s \t%s\n", $2, $1, $7; }
                         } END {print "Resultados para el nombre: ", name}' $file
                         # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                         add_log "Se consulto con awk por el nombre: $query"
@@ -287,7 +287,7 @@ awk_scripts(){
                         read -p '> Ingrese el apellido a buscar: ' query
                         awk -F"," -v lastname="$query" 'BEGIN {print "Buscar registro por apellido"; lastname=toupper(lastname)} {
                             split(toupper($1),splitted_name," ");
-                            if (lastname == $1 || lastname == splitted_name[1] || lastname == splitted_name[2]) { print $0 }
+                            if (lastname == $1 || lastname == splitted_name[1] || lastname == splitted_name[2]) { printf "%24s %24s \t%s\n", $2, $1, $7; }
                         } END {print "Resultados para el apellido: ", lastname}' $file
                         # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                         add_log "Se consulto con awk por el apellido: $query"
@@ -299,9 +299,18 @@ awk_scripts(){
                 ;;
             2)
                 clear
-                awk -F"," 'BEGIN {print "Head"} {print $1} END {print "Foot"}' $file
+                echo 'Formatos de busqueda'
+                echo '- Fecha completa: AAAA-mm-dd'
+                echo '- Dia: dd'
+                echo '- Mes: mm'
+                echo '- Año: AAAA'
+                read -p '> Ingrese la fecha a buscar: ' query
+                awk -F"," -v date="$query" 'BEGIN {print "Buscar registro por apellido";} {
+                    split($4,splitted_date,"-");
+                    if (name == $4 || date == splitted_date[1] || date == splitted_date[2] || date == splitted_date[2]) { printf "\t%10s %30s %30s \t%s\n", $4, $2, $1, $7; }
+                } END {print "Resultados para el apellido: ", lastname}' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
-                add_log 'Se consulto con awk por fecha de registro'
+                add_log "Se consulto con awk por fecha de registro: $query"
                 ;;
             3)
                 clear
@@ -313,7 +322,7 @@ awk_scripts(){
                 clear
                 awk -F"," 'BEGIN {print "Registros con campos vacios"} {
                 if ($1 == "" || $2 == "" || $3 == "" || $4 == "" || $5 == "" || $6 == "" || $7 == "") {
-                    print $0
+                    printf "%24s %24s \t%s\n", $2, $1, $7;
                 } }' $file
                 # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk registros incompletos'
@@ -322,7 +331,7 @@ awk_scripts(){
                 clear
                 awk -F"," 'BEGIN {print "Registros con campos NULL"} {
                 if ($1 == "NULL" || $2 == "NULL" || $3 == "NULL" || $4 == "NULL" || $5 == "NULL" || $6 == "NULL" || $7 == "NULL") {
-                    print $0
+                    printf "%24s %24s \t%s\n", $2, $1, $7;
                 }}' $file
             # curl -d "menu=awk&option=$awk_option" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
                 add_log 'Se consulto con awk registros con campos NULL'
