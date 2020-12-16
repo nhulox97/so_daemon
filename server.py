@@ -62,6 +62,9 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             if option == 'log':
                 receiver = params['receiver']
                 value = subprocess.check_output([script, option, receiver])
+            elif option == 'backup':
+                script = './scripts/backupremote.sh'
+                value = subprocess.check_output([script, option])
             else:
                 value = 'Opcion invalida'
         elif menu == 'awk':

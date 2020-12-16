@@ -242,7 +242,9 @@ maintenance_script(){
                 ;;
             2)
                 clear
-                echo $maintenance_option;;
+                curl -d "menu=maintenance&option=backup" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://localhost:8000
+                add_log "Se envio el archivo log a: $receiver"
+                ;;
             3)
                 clear
                 echo $sudopass | sudo -S systemctl stop sergiodaemon

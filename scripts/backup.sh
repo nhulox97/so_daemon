@@ -6,7 +6,7 @@ password='dosv2018'
 user='nhulox97'
 current=`pwd`
 backups_dir="$current/backups"
-date=`date '+%Y%m%d-%H%M'` # no usar ':' en filenames eso da error
+date=`date '+%Y%m%d-%H%M'` # no usar ':' en filenames eso da error porque esa sintaxis se usa para hacer referencia a un puerto o un host remoto
 current_date=`date +'%Y-%m-%d'`
 current_time=`date +'%H:%M'`
 
