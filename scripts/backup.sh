@@ -2,8 +2,8 @@
 
 db_name="$1"
 receiver="$2"
-password='dosv2018'
-user='nhulox97'
+password=''
+user=''
 current=`pwd`
 backups_dir="$current/backups"
 date=`date '+%Y%m%d-%H%M'` # no usar ':' en filenames eso da error porque esa sintaxis se usa para hacer referencia a un puerto o un host remoto
