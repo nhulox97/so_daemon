@@ -152,8 +152,8 @@ wikidaemon_script(){
 }
 
 backup_script() {
-    password='dosv2018'
-    user='nhulox97'
+    password=''
+    user=''
 
     echo 'Menu de backup'
     echo ''
