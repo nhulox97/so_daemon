@@ -4,7 +4,7 @@
 
 backups_dir="./backups"
 logfile="./logfile.log"
-sudopass='dosv2018'
+sudopass='your_pass'
 
 add_log(){
     action=$1
